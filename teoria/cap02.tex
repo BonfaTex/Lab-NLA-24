@@ -1,0 +1,195 @@
+%!TEX root = ../main.tex
+
+\chapter{Inheritance - Overview}
+\thispagestyle{empty}
+
+\section{Basics} % (fold)
+\label{sec:basics}
+
+\begin{itemize}
+\item A program is an object oriented program (OOP) if it provides the following (PIE) properties:
+\begin{equation*}
+\boxed{\text{Polymorphism}} \qquad \boxed{\text{Inheritance}} \qquad  \boxed{\text{Encapsulation}}
+\end{equation*} 
+
+\item Encapsulation: binds the data \& functions in one \textit{Class}; by thinking the system as composed of independent objects, we keep sub-parts really independent and this:
+\begin{itemize}[$\rightarrow$]
+    \item allows different groups of programmers to work on different parts of the project
+    \item allows extreme modularity
+    \item increases code-reuse
+\end{itemize}
+
+\item Inheritance: provides a way to create a new class from an existing class
+\begin{equation*}
+\begin{array}{ccc}
+\text{\footnotesize base class} & \to & \text{\footnotesize derived class} \\
+\text{\footnotesize or super class} &  & \text{\footnotesize or sub class} \\
+\text{\footnotesize or father class} &  & \text{\footnotesize or child class} \\
+\text{\footnotesize or parent class} &  & 
+\end{array}
+\end{equation*}
+
+Example:
+\begin{align*}
+\begin{array}{c}
+\text{High level} \\
+\text{(more general)}  
+\end{array}
+\bigg[
+&\quad\text{Father class: Insect}
+ \\
+\begin{array}{c}
+\text{Low level} \\
+\text{(more specific)}  
+\end{array}
+\bigg[
+&\quad\begin{array}{l}
+\hookrightarrow \text{Child class: Bumble Bee} \\
+\hookrightarrow \text{Child class: Grasshopper}
+\end{array}
+\end{align*}
+%\fg{0.7}{bumblee}
+
+\begin{marker}
+To recognize the relationship between father and child class you can use this trick:
+\begin{equation*}
+\text{a }\texttt{ DerivedClassName } \text{ is a } \texttt{ BaseClassName } \text{ with ...}
+\end{equation*}
+and then enumerate the special characteristic of that subclass.
+
+\medskip
+
+\circled{E.g.} A triangle is a polygon with three edges
+\end{marker}
+
+Motivations/Advantages of Inheritance:
+\begin{itemize}[$\rightarrow$]
+    \item \textbf{reuse} the superclass members
+
+    \footnotesize{(this point expresses code-reuse)}
+
+    \normalsize
+
+    \item \textbf{extend} the superclass by adding new members
+
+    \item \textbf{specialize} the superclass by changing implementation without changing the interface (e.g., by overloading its methods with your own implememntations)
+
+    \footnotesize{(these last two point express code-evolution)}
+\end{itemize}
+
+\end{itemize}
+
+% section basics (end)
+
+\newpage
+
+\section{Inheritance} % (fold)
+\label{sec:inheritance}
+
+\begin{itemize}
+\item Inheritance is a mean of specifying hierarchical relationships between types
+
+\item C++ classes
+
+\begin{itemize}
+    \item[$\rightarrow$] inherit both data and function members (although such members may not always be accessible in the derived class, just wait!)
+
+    \item[$\leftarrow$] does not inherit the base class constructors, destructor, assignment operator and friends (because these functions are class-specific)
+\end{itemize}
+
+\item Syntax:
+\begin{equation*}
+\texttt{class DerivedClassName : access-level BaseClassName \{ // body... \} }
+\end{equation*}
+
+The access-level specifies the type of derivation i.e. \textbf{the inheritance type}:
+\begin{itemize}
+    \item private (by default)
+    \item public
+    \item protected
+
+    \danger$\ $ we will always use public inheritance (because we want to inherit the interface)
+\end{itemize}
+
+\item Example:
+\begin{lstlisting}
+// base class
+class Point
+{
+    protected:
+        float x;
+        float y;
+    public:
+        void set_coord(float xx, float yy);
+};
+
+// derived class
+class 3dPoint: public Point
+{
+    private:
+        float z;
+    public:
+        void set_coord(float xx, float yy, float zz);
+}
+\end{lstlisting}
+
+\textbf{Remark:} here there is the overloading of the method \texttt{set\_cord}
+
+\end{itemize}
+
+% section inheritance (end)
+
+\section{Protected members and Class access} % (fold)
+\label{sec:protected_members_and_class_access}
+
+In a base class, the \texttt{public} and \texttt{private} labels have their ordinary meanings: 
+\begin{itemize}[$\triangleright$]
+    \item \texttt{public} members are accessibile anywhere (outside the class and also from objects)
+
+    \item \texttt{private} members are accessible only in the class itself
+\end{itemize}
+
+A derived class has the same access as any other part of the program to the \texttt{public} and \texttt{private} members of its base class: it may access the \texttt{public} members and has no access to the \texttt{private} members.
+
+Sometimes a class used as a base class has members that it wants to allow its derived classes to access, while still prohibiting access to those same members by other users. The \texttt{protected} access label is used for such members:
+\begin{itemize}[$\triangleright$]
+    \item \texttt{protected} members are accessibile in the class and in subclasses
+\end{itemize}
+
+In the example above: our \texttt{Point} based class expects its derived class \texttt{3dPoint} to redefine the \texttt{set\_coord} function; to do so, this class will need access to the \texttt{x} and \texttt{y} members. So those members have to be \texttt{protected}. (If I wanted to create a \texttt{4dPoint} class by taking \texttt{3DPoint} as the base class then I would have to declare the \texttt{z} coordinate \texttt{protected} too.)
+
+\newpage
+
+The protected access label can be thought of as a blend of \texttt{private} and \texttt{public}:
+\begin{itemize}[$\triangleright$]
+    \item Like \texttt{private} members, \texttt{protected} members are inaccessible to users of the class.
+
+    \item Like \texttt{public} members, the \texttt{protected} members are accessible to classes derived from this class.
+\end{itemize}
+
+In addition, \texttt{protected} has another important property:
+\begin{itemize}[$\triangleright$]
+    \item A derived object may access the \texttt{protected} members of its base class only through a derived object. The derived class has no special access to the \texttt{protected} members of base type objects.
+\end{itemize}
+
+
+% section protected_members_and_class_access (end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

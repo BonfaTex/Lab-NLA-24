@@ -1,0 +1,154 @@
+\documentclass[a4paper,10pt]{book}
+
+\input{includes/style}
+
+\usepackage[
+    left=2.5cm, % inner
+    right=2.5cm, % outer
+    top=1.5cm,
+    bottom=1.5cm,
+    %showframe,
+    ]{geometry}
+
+\usepackage{titling}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+
+\usepackage{listings}
+
+\lstset{
+    language=C++,
+    %alsolanguage=[ANSI]C,
+    basicstyle=\small\ttfamily,
+    numbers=none,
+    numberstyle=\tiny,
+    stepnumber=1,
+    frame=single
+}
+
+\lstset{
+    literate=
+        {è}{{\ttfamily\`e}}1
+        {à}{{\ttfamily\`a}}1
+        {ì}{{\ttfamily\`i}}1
+        {ò}{{\ttfamily\`o}}1
+        {ù}{{\ttfamily\`u}}1
+        {-}{{\ttfamily -}}1
+        {\&}{{\sffamily \&}}1
+        {<}{{\sffamily <}}1
+        {>}{{\sffamily >}}1,
+    % language=C++,
+    keywordstyle=\color{red}, 
+    keywordstyle=[2]{\color{purple}},
+    directivestyle=\color{red},
+    commentstyle=\color{blue},
+    stringstyle=\color{teal},
+    % basicstyle=\small\ttfamily,
+    showstringspaces=lines,
+    keepspaces,
+    % tabsize=4,
+    deletekeywords={operator, string, char},
+    morekeywords={include, size_t, ifndef, define},
+    morekeywords=[2]{main},
+    otherkeywords={\#},
+    %moredelim=*[directive]\#,
+    %moredirectives={main},
+}
+%deletekeywords={}, morekeywords={}, rulecolor=\color{blue}
+
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{marker}[1][]{enhanced,
+    before skip=2mm,after skip=5mm,
+    boxrule=0.4pt,left=5mm,right=2mm,top=1mm,bottom=1mm,
+    colback=yellow!50,
+    colframe=yellow!20!black,
+    sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
+    underlay={%
+        \path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+        \path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+        \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white,rotate=0]{\Huge\bfseries ! } ([xshift=4mm]interior.north west);
+    },
+    drop fuzzy shadow,#1}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\usepackage{pdfpages}
+\includepdfset{pages=-, frame, offset=0mm 1cm,
+   pagecommand={\thispagestyle{empty}}}
+
+\newcommand*{\TakeFourierOrnament}[1]{{%
+\fontencoding{U}\fontfamily{futs}\selectfont\char#1}}
+\newcommand*{\danger}{\TakeFourierOrnament{49}}
+
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{figure}{section}
+
+% =================================================================
+
+\begin{document}
+
+\frontmatter
+
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+
+    \fg{0.5}{images/logo_polimi}
+
+    \vspace*{3cm}
+
+    {\large Labs of}\\
+    
+    \vspace*{1.5cm}
+    
+    {\Huge \textsc{NLA}}\\
+    
+    \vspace*{1.5cm}
+    
+    {\large taught by Professor Paola Antonietti}\\
+    \vspace*{0.3cm}
+    {\large Master Degree in Mathematical Engineering, Polimi, 2024/25}\\
+
+    \vspace*{6cm}
+
+    {\large By}\\
+    \vspace*{0.3cm}
+    {\large Teo Bonfa}\\
+
+    \vspace*{1.5cm}
+
+    \fg{0.2}{images/logo_blackCL}
+\end{center}
+\vspace*{\fill}
+\clearpage
+
+% INDICE
+
+\cleardoublepage
+\tableofcontents
+\cleardoublepage
+
+\mainmatter
+\pagestyle{empty}
+
+\input{teoria/cap01}
+\input{teoria/cap02}
+\input{teoria/cap03}
+\input{teoria/cap04}
+\input{teoria/cap05}
+
+\input{teoria/lab01}
+\input{teoria/lab02}
+\input{teoria/lab03}
+\input{teoria/lab04}
+
+\end{document}
