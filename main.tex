@@ -78,11 +78,6 @@
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
     \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
-
-\usepackage{pdfpages}
-\includepdfset{pages=-, frame, offset=0mm 1cm,
-   pagecommand={\thispagestyle{empty}}}
-
 \newcommand*{\TakeFourierOrnament}[1]{{%
 \fontencoding{U}\fontfamily{futs}\selectfont\char#1}}
 \newcommand*{\danger}{\TakeFourierOrnament{49}}
